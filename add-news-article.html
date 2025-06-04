@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add News Article - SSKDA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #F5F5F5;
+            color: #333333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FF5722;
+            text-decoration: none;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin-left: 30px;
+        }
+        nav ul li a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: #FF5722;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px; /* Adjusted for form content */
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            flex-grow: 1;
+        }
+        h1, h2 {
+            color: #FF5722;
+            text-align: center;
+        }
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        .form-group input[type="text"],
+        .form-group input[type="url"],
+        .form-group textarea {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #FF5722;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            width: auto;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #E64A19;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .hidden {
+            display: none;
+        }
+        #verificationMessage, #formMessage {
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        .success {
+            color: green;
+        }
+        .error {
+            color: red;
+        }
+        footer {
+            background: #333333;
+            color: #FFFFFF;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto; /* Pushes footer to bottom */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">SSKDA</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="member-dashboard.html" class="active">Member Dashboard</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="member-achievements.html">Achievements</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <h1>Add News Article</h1>
+
+        <section id="memberVerificationSection" class="form-section">
+            <h2>Member Verification</h2>
+            <div class="form-group">
+                <label for="associationId">Association ID:</label>
+                <input type="text" id="associationId" name="associationId" placeholder="Enter your Association ID">
+            </div>
+            <button type="button" id="verifyBtn" class="btn">Verify ID</button>
+            <p id="verificationMessage"></p>
+        </section>
+
+        <section id="addArticleFormSection" class="form-section hidden">
+            <h2>Article Details</h2>
+            <form id="addArticleForm">
+                <div class="form-group">
+                    <label for="articleHeadline">Headline:</label>
+                    <input type="text" id="articleHeadline" name="articleHeadline" required>
+                </div>
+                <div class="form-group">
+                    <label for="articleSummary">Summary (Paragraphs separated by newlines):</label>
+                    <textarea id="articleSummary" name="articleSummary" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="articleAuthor">Author Name:</label>
+                    <input type="text" id="articleAuthor" name="articleAuthor" required>
+                </div>
+                <div class="form-group">
+                    <label for="articleImageUrl">Image URL (Optional):</label>
+                    <input type="url" id="articleImageUrl" name="articleImageUrl" placeholder="https://example.com/image.jpg">
+                </div>
+                 <div class="form-group">
+                    <label for="authorImageUrl">Author Avatar URL (Optional):</label>
+                    <input type="url" id="authorImageUrl" name="authorImageUrl" placeholder="https://example.com/author.jpg">
+                </div>
+                <button type="submit" class="btn">Submit Article</button>
+                <p id="formMessage"></p>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SSKDA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const verifyBtn = document.getElementById('verifyBtn');
+            const associationIdInput = document.getElementById('associationId');
+            const verificationMessage = document.getElementById('verificationMessage');
+            const memberVerificationSection = document.getElementById('memberVerificationSection');
+            const addArticleFormSection = document.getElementById('addArticleFormSection');
+            const addArticleForm = document.getElementById('addArticleForm');
+            const formMessage = document.getElementById('formMessage');
+
+            const validAssociationId = "KA001";
+
+            verifyBtn.addEventListener('click', function() {
+                const enteredId = associationIdInput.value.trim();
+                if (enteredId === validAssociationId) {
+                    verificationMessage.textContent = 'Verification successful. You can now add an article.';
+                    verificationMessage.className = 'success';
+                    memberVerificationSection.classList.add('hidden');
+                    addArticleFormSection.classList.remove('hidden');
+                } else {
+                    verificationMessage.textContent = 'Invalid Association ID. Please try again.';
+                    verificationMessage.className = 'error';
+                    if (!addArticleFormSection.classList.contains('hidden')) {
+                        addArticleFormSection.classList.add('hidden');
+                    }
+                }
+            });
+
+            addArticleForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                formMessage.textContent = ''; 
+
+                const headline = document.getElementById('articleHeadline').value.trim();
+                const summary = document.getElementById('articleSummary').value.trim();
+                const author = document.getElementById('articleAuthor').value.trim();
+                const imageUrl = document.getElementById('articleImageUrl').value.trim();
+                const authorImageUrl = document.getElementById('authorImageUrl').value.trim();
+
+                if (!headline || !summary || !author) {
+                    formMessage.textContent = 'Headline, Summary, and Author Name are required.';
+                    formMessage.className = 'error';
+                    return;
+                }
+
+                // Simulate article submission
+                console.log("New Article Submitted:");
+                console.log("Headline:", headline);
+                console.log("Summary:", summary);
+                console.log("Author:", author);
+                console.log("Image URL:", imageUrl);
+                console.log("Author Image URL:", authorImageUrl);
+                
+                // Here, you would typically send this data to a server.
+                // For now, we'll just show a success message and clear the form.
+
+                formMessage.textContent = 'Article submitted successfully! (Check console for details)';
+                formMessage.className = 'success';
+                addArticleForm.reset();
+
+                // Optionally, you could hide the form again or redirect
+                // setTimeout(() => {
+                //    addArticleFormSection.classList.add('hidden');
+                //    memberVerificationSection.classList.remove('hidden');
+                //    associationIdInput.value = '';
+                //    verificationMessage.textContent = '';
+                // }, 3000);
+            });
+        });
+    </script>
+</body>
+</html> 

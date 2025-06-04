@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Dashboard - SSKDA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #f8f9fa; /* Lighter page background */
+            color: #333333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        header {
+            background-color: #FFFFFF;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Softer header shadow */
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 4px solid #FF5722; /* Added orange line */
+        }
+        /* Ensuring header container is not affected by general .container or .content-box styles */
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0; /* Reduced header padding */
+            width: 90%;
+            max-width: 1100px; /* Consistent max-width for header */
+            margin: 0 auto;
+        }
+        .logo {
+            font-size: 1.7rem; /* Slightly smaller logo */
+            font-weight: 700;
+            color: #FF5722;
+            text-decoration: none;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li {
+            margin-left: 25px; /* Adjusted nav spacing */
+        }
+        nav ul li a {
+            color: #555; /* Darker grey for nav links */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: #FF5722;
+        }
+
+        /* Main content box - styled to match the image */
+        .content-box {
+            width: 90%;
+            max-width: 450px; /* Made dialog box smaller */
+            margin: 60px auto; /* Increased top/bottom margin */
+            padding: 35px 40px; /* Adjusted padding for smaller box */
+            background-color: #FFFFFF;
+            box-shadow: 0px 5px 20px rgba(0,0,0,0.07); /* Subtle shadow */
+            border-radius: 8px;
+            flex-grow: 1;
+            text-align: center;
+        }
+        h1 {
+            color: #FF5722;
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 1.8rem; /* Adjusted H1 size */
+            font-weight: 600;
+        }
+        h2.login-title {
+            color: #FF5722;
+            text-align: center;
+            font-size: 1.4rem; /* Adjusted subtitle size */
+            margin-top: 10px;
+            margin-bottom: 30px; /* Increased space before form */
+            font-weight: 500;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center; /* Centered label and input by proxy */
+            max-width: 300px; /* Narrower form group, centered by content-box */
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px; /* Increased space for centered label */
+            font-weight: 500;
+            color: #495057; /* Standard dark label color */
+            font-size: 0.9rem;
+        }
+        .form-group input[type="text"] {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            text-align: left; /* Keep placeholder text left-aligned */
+        }
+        .btn.login-btn {
+            background-color: #FF5722;
+            color: white;
+            padding: 9px 28px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            display: inline-block; /* Keeps it centered by parent's text-align */
+            margin-top: 5px;
+        }
+        .btn.login-btn:hover {
+            background-color: #E64A19;
+        }
+        .hidden {
+            display: none;
+        }
+        #verificationMessage {
+            margin-top: 25px;
+            font-size: 0.9rem;
+            text-align: center;
+            min-height: 1em; /* Prevent layout shift */
+        }
+        .success {
+            color: #28a745;
+        }
+        .error {
+            color: #dc3545;
+        }
+        .dashboard-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #e9ecef; /* Lighter separator */
+            text-align: left; /* Reset text-align for this section if needed */
+        }
+        .dashboard-section h2 {
+            color: #FF5722;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        .dashboard-links a {
+            display: block;
+            background-color: #FF5722; /* Primary color for links */
+            color: white;
+            padding: 12px 20px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .dashboard-links a:hover {
+            background-color: #E64A19;
+            transform: translateY(-2px);
+        }
+        footer {
+            background: #343a40; /* Darker footer */
+            color: #f8f9fa;    /* Lighter text for footer */
+            padding: 20px 0;
+            text-align: center;
+            margin-top: auto; /* Pushes footer to bottom */
+        }
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo">SSKDA</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="member-dashboard.html" class="active">Member Dashboard</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="member-achievements.html">Achievements</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="content-box">
+        <h1>Member Dashboard</h1>
+
+        <section id="memberVerificationSection">
+            <h2 class="login-title">Member Login</h2>
+            <div class="form-group">
+                <label for="associationId">Association ID:</label>
+                <input type="text" id="associationId" name="associationId" placeholder="Enter your Association ID">
+            </div>
+            <button type="button" id="verifyBtn" class="btn login-btn">Login</button>
+            <p id="verificationMessage"></p>
+        </section>
+
+        <section id="dashboardContentSection" class="dashboard-section hidden">
+            <h2>Welcome, Member!</h2>
+            <p style="text-align:center; margin-bottom:20px;">Select an option below:</p>
+            <div class="dashboard-links">
+                <a href="add-news-article.html">Add News Article</a>
+                <a href="add-achievement.html">Add Achievement</a>
+                <!-- Add more links here for other member functionalities -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <!-- Footer uses direct p for simplicity and to match image style -->
+        <p>&copy; 2025 SSKDA. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const verifyBtn = document.getElementById('verifyBtn');
+            const associationIdInput = document.getElementById('associationId');
+            const verificationMessage = document.getElementById('verificationMessage');
+            const memberVerificationSection = document.getElementById('memberVerificationSection');
+            const dashboardContentSection = document.getElementById('dashboardContentSection');
+
+            const validMemberIds = ["KA001", "KA12345", "KA67890", "KA24680"]; 
+
+            verifyBtn.addEventListener('click', function() {
+                const enteredId = associationIdInput.value.trim();
+                if (validMemberIds.includes(enteredId)) {
+                    verificationMessage.textContent = 'Login successful. Welcome!';
+                    verificationMessage.className = 'success';
+                    memberVerificationSection.classList.add('hidden');
+                    dashboardContentSection.classList.remove('hidden');
+                } else {
+                    verificationMessage.textContent = 'Invalid Association ID. Please try again.';
+                    verificationMessage.className = 'error';
+                    if (!dashboardContentSection.classList.contains('hidden')) {
+                        dashboardContentSection.classList.add('hidden');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

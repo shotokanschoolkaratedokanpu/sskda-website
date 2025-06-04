@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">   
+    <title>Register - SSKDA</title>    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Reset & Theme */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif;
+            background-color: #F5F5F5; /* Light Gray */
+            color: #333333; /* Dark Gray */
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            color: #FF5722; /* Primary Orange */
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FF5722;
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #FF5722;
+        }
+
+        /* Hero Section */
+        #hero {
+            background: #FFFFFF;
+            text-align: center;
+            min-height: 200px;
+            padding: 60px 0;
+            border-bottom: 4px solid #FF5722;
+        }
+
+        #hero .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        #hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Form Styles */
+        .form-section {
+            background: #FFFFFF;
+            padding: 60px 0;
+        }
+
+        .form-container {
+            background: #FFFFFF;
+            border-radius: 8px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #FF5722;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #E64A19;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #333333;
+            color: #FFFFFF;
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+
+            nav ul li {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index.html" class="logo" onclick="window.location.href='index.html'; return false;">SSKDA</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html" onclick="window.location.href='index.html'; return false;">Home</a></li>
+                    <li><a href="member-dashboard.html" onclick="window.location.href='member-dashboard.html'; return false;">Member Dashboard</a></li>
+                    <li><a href="register.html" class="active" onclick="window.location.href='register.html'; return false;">Register</a></li>
+                    <li><a href="member-achievements.html" onclick="window.location.href='member-achievements.html'; return false;">Achievements</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container">
+            <h1>New Member Registration</h1>
+            <p>Join our community and begin your martial arts journey</p>
+        </div>
+    </section>
+
+    <section class="form-section">
+        <div class="container">
+            <div class="form-container">
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Karate Experience</label>
+                        <select id="experience" name="experience" required>
+                            <option value="">Select your experience level</option>
+                            <option value="beginner">Beginner (No prior experience)</option>
+                            <option value="intermediate">Intermediate (1-3 years)</option>
+                            <option value="advanced">Advanced (3+ years)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="belt">Current Belt</label>
+                        <select id="belt" name="belt" required>
+                            <option value="">Select your current belt</option>
+                            <option value="white">White</option>
+                            <option value="yellow">Yellow</option>
+                            <option value="orange">Orange</option>
+                            <option value="green">Green</option>
+                            <option value="blue">Blue</option>
+                            <option value="purple">Purple</option>
+                            <option value="brown">Brown</option>
+                            <option value="black">Black</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" name="address" rows="3" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="emergencyContact">Emergency Contact Name & Number</label>
+                        <input type="text" id="emergencyContact" name="emergencyContact" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn" id="submitBtn">Register Now</button>
+                    </div>
+                </form>
+                <div id="formMessage" style="margin-top: 20px; display: none;"></div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 SSKDA. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- CDN Links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
+    <script>
+        // Form validation and submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const formMessage = document.getElementById('formMessage');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Basic validation
+                const fullName = document.getElementById('fullName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (fullName.length < 3) {
+                    showMessage('Please enter your full name', 'error');
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    showMessage('Please enter a valid email address', 'error');
+                    return;
+                }
+                
+                if (phone.length < 10) {
+                    showMessage('Please enter a valid phone number', 'error');
+                    return;
+                }
+                
+                // If validation passes, show success message
+                showMessage('Registration successful! Your association ID will be sent to your email shortly.', 'success');
+                form.reset();
+                
+                // In a real application, you would send this data to a server
+            });
+            
+            function isValidEmail(email) {
+                const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return re.test(email);
+            }
+            
+            function showMessage(message, type) {
+                formMessage.textContent = message;
+                formMessage.style.display = 'block';
+                
+                if (type === 'error') {
+                    formMessage.style.color = '#D32F2F';
+                } else {
+                    formMessage.style.color = '#388E3C';
+                }
+                
+                // Animate the message
+                anime({
+                    targets: formMessage,
+                    opacity: [0, 1],
+                    translateY: [10, 0],
+                    easing: 'easeOutQuad',
+                    duration: 500
+                });
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    anime({
+                        targets: formMessage,
+                        opacity: [1, 0],
+                        easing: 'easeOutQuad',
+                        duration: 500,
+                        complete: function() {
+                            formMessage.style.display = 'none';
+                        }
+                    });
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
