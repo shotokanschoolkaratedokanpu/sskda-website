@@ -53,6 +53,10 @@ app.get('/add-news-article.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'add-news-article.html'));
 });
 
+app.get('/championship-registration.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'championship-registration.html'));
+});
+
 // Handle achievement submission
 app.post('/submit-achievement', upload.single('achievementImage'), (req, res) => {
   try {
@@ -133,6 +137,83 @@ app.get('/api/achievements', (req, res) => {
   }
   
   res.json(achievements);
+});
+
+// API endpoint for championship registration
+app.post('/api/championship-registration', (req, res) => {
+  try {
+    const registrationData = {
+      ...req.body,
+      registrationDate: new Date().toISOString(),
+      registrationId: 'CHAMP' + Date.now()
+    };
+    
+    // Validate required fields
+    const requiredFields = ['firstName', 'lastName', 'dob', 'gender', 'email', 'phone', 'associationId', 'belt', 'category', 'ageGroup', 'emergencyName', 'emergencyPhone'];
+    for (const field of requiredFields) {
+      if (!registrationData[field]) {
+        res.status(400).send(`Missing required field: ${field}`);
+        return;
+      }
+    }
+    
+    // Validate association ID
+    if (!registrationData.associationId.match(/^KA[0-9]{3}$/)) {
+      res.status(400).send('Invalid Association ID format. Must be KA followed by 3 digits (e.g., KA001)');
+      return;
+    }
+    
+    // Read existing registrations or create new file
+    const registrationsPath = path.join(__dirname, 'championship-registrations.json');
+    let registrations = [];
+    
+    if (fs.existsSync(registrationsPath)) {
+      const data = fs.readFileSync(registrationsPath, 'utf8');
+      registrations = data ? JSON.parse(data) : [];
+    }
+    
+    // Add new registration
+    registrations.push(registrationData);
+    
+    // Write updated data back
+    fs.writeFileSync(registrationsPath, JSON.stringify(registrations, null, 2));
+    
+    res.status(200).json({
+      success: true,
+      message: 'Registration successful',
+      registrationId: registrationData.registrationId
+    });
+  } catch (error) {
+    console.error('Championship registration error:', error);
+    res.status(500).send('Error processing registration');
+  }
+});
+
+// API endpoint to get championship registrations
+app.get('/api/championship-registrations', (req, res) => {
+  try {
+    const registrationsPath = path.join(__dirname, 'championship-registrations.json');
+    
+    if (!fs.existsSync(registrationsPath)) {
+      res.json([]);
+      return;
+    }
+    
+    const data = fs.readFileSync(registrationsPath, 'utf8');
+    let registrations = JSON.parse(data);
+    
+    const { associationId } = req.query;
+    
+    // Filter by association ID if provided
+    if (associationId) {
+      registrations = registrations.filter(item => item.associationId === associationId);
+    }
+    
+    res.json(registrations);
+  } catch (error) {
+    console.error('Error fetching registrations:', error);
+    res.status(500).send('Error fetching registrations');
+  }
 });
 
 app.listen(port, () => {
