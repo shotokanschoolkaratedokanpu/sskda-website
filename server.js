@@ -28,9 +28,29 @@ app.use(express.static(__dirname));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Explicit root route for environments that skip static index fallback
+// Explicit routes for HTML pages (Vercel serverless compatibility)
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/member-achievements.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'member-achievements.html'));
+});
+
+app.get('/register.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'register.html'));
+});
+
+app.get('/member-dashboard.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'member-dashboard.html'));
+});
+
+app.get('/add-achievement.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'add-achievement.html'));
+});
+
+app.get('/add-news-article.html', (req, res) => {
+  res.sendFile(path.join(__dirname, 'add-news-article.html'));
 });
 
 // Handle achievement submission
