@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7th All India SSKDA Karate Championship 2025 - Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #F5F5F5;
+            color: #333333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #FFFFFF;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FF5722;
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            color: #333333;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, nav a.active {
+            color: #FF5722;
+        }
+
+        .championship-container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        .poster-section {
+            position: sticky;
+            top: 100px;
+        }
+
+        .poster-wrapper {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            border: 4px solid #FF5722;
+        }
+
+        .poster-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .registration-section {
+            background: #FFFFFF;
+            border-radius: 15px;
+            padding: 3rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .registration-section h1 {
+            color: #FF5722;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .event-details {
+            background: #FF5722;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 87, 34, 0.3);
+        }
+
+        .event-details h2 {
+            color: #FFFFFF;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .event-details p {
+            color: #FFFFFF;
+            font-weight: 500;
+            margin: 0.3rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #FF5722;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #FF5722;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background: #E64A19;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 87, 34, 0.4);
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 1024px) {
+            .championship-container {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-section {
+                position: relative;
+                top: 0;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .success-message {
+            background: #2ecc71;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">SSKDA</a>
+            <nav>
+                <ul>
+                    <li><a href="https://sites.google.com/view/csjmukarateacademy/home" target="_blank">CSJMU Karate Academy</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="member-dashboard.html">Member Dashboard</a></li>
+                    <li><a href="register.html">Register</a></li>
+                    <li><a href="member-achievements.html">Achievements</a></li>
+                    <li><a href="championship-registration.html" class="active">Championship</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="championship-container">
+        <div class="poster-section">
+            <div class="poster-wrapper">
+                <img src="Screenshot_2025-11-02-23-16-21-10_6012fa4d4ddec268fc5c7112cbb265e7.jpg" alt="7th All India SSKDA Karate Championship 2025">
+            </div>
+        </div>
+
+        <div class="registration-section">
+            <h1>Championship Registration</h1>
+            
+            <div class="event-details">
+                <h2>7th All India SSKDA Karate Championship 2025</h2>
+                <p>📅 20-21st December 2025</p>
+                <p>📍 Kanpur, Uttar Pradesh</p>
+                <p>🏆 Officially Approved by Karate India Organization & Karate Association of Uttar Pradesh</p>
+            </div>
+
+            <div id="successMessage" class="success-message"></div>
+            <div id="errorMessage" class="error-message"></div>
+
+            <form id="championshipForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name <span class="required">*</span></label>
+                        <input type="text" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name <span class="required">*</span></label>
+                        <input type="text" name="lastName" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Birth <span class="required">*</span></label>
+                        <input type="date" name="dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender <span class="required">*</span></label>
+                        <select name="gender" required>
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email <span class="required">*</span></label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" name="phone" required pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp Number</label>
+                        <input type="tel" name="whatsapp" pattern="[0-9]{10}">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Association ID <span class="required">*</span></label>
+                    <input type="text" name="associationId" required pattern="KA[0-9]{3}" placeholder="e.g., KA001">
+                </div>
+
+                <div class="form-group">
+                    <label>Belt/Rank <span class="required">*</span></label>
+                    <select name="belt" required>
+                        <option value="">Select Belt</option>
+                        <option value="white">White Belt</option>
+                        <option value="yellow">Yellow Belt</option>
+                        <option value="orange">Orange Belt</option>
+                        <option value="green">Green Belt</option>
+                        <option value="blue">Blue Belt</option>
+                        <option value="brown">Brown Belt</option>
+                        <option value="black">Black Belt</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Category <span class="required">*</span></label>
+                    <select name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="kata">Kata</option>
+                        <option value="kumite">Kumite</option>
+                        <option value="both">Both (Kata & Kumite)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Weight Category (for Kumite)</label>
+                    <select name="weightCategory">
+                        <option value="">Select Weight Category</option>
+                        <option value="under-50">Under 50kg</option>
+                        <option value="50-55">50-55kg</option>
+                        <option value="55-60">55-60kg</option>
+                        <option value="60-65">60-65kg</option>
+                        <option value="65-70">65-70kg</option>
+                        <option value="70-75">70-75kg</option>
+                        <option value="75-80">75-80kg</option>
+                        <option value="above-80">Above 80kg</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Age Group <span class="required">*</span></label>
+                    <select name="ageGroup" required>
+                        <option value="">Select Age Group</option>
+                        <option value="sub-junior">Sub-Junior (Under 14)</option>
+                        <option value="junior">Junior (14-17)</option>
+                        <option value="senior">Senior (18+)</option>
+                        <option value="veteran">Veteran (35+)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Coach/Sensei Name</label>
+                    <input type="text" name="coachName">
+                </div>
+
+                <div class="form-group">
+                    <label>Previous Championship Experience</label>
+                    <textarea name="experience" rows="3" placeholder="List any previous championships or achievements..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Emergency Contact Name <span class="required">*</span></label>
+                    <input type="text" name="emergencyName" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Emergency Contact Number <span class="required">*</span></label>
+                    <input type="tel" name="emergencyPhone" required pattern="[0-9]{10}">
+                </div>
+
+                <div class="form-group">
+                    <label>Medical Conditions/Allergies</label>
+                    <textarea name="medicalInfo" rows="2" placeholder="Please mention any medical conditions or allergies..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Register for Championship</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('championshipForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/championship-registration', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    successMsg.textContent = 'Registration successful! You will receive a confirmation email shortly.';
+                    successMsg.style.display = 'block';
+                    e.target.reset();
+                    
+                    // Scroll to success message
+                    successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                } else {
+                    const error = await response.text();
+                    errorMsg.textContent = error || 'Registration failed. Please try again.';
+                    errorMsg.style.display = 'block';
+                }
+            } catch (error) {
+                errorMsg.textContent = 'Network error. Please check your connection and try again.';
+                errorMsg.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
