@@ -28,6 +28,11 @@ app.use(express.static(__dirname));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Explicit root route for environments that skip static index fallback
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
 // Handle achievement submission
 app.post('/submit-achievement', upload.single('achievementImage'), (req, res) => {
   try {
