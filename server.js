@@ -30,6 +30,12 @@ app.use(express.json());
 
 // Explicit routes for HTML pages (Vercel serverless compatibility)
 app.get('/', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/index.html', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
@@ -54,6 +60,7 @@ app.get('/add-news-article.html', (req, res) => {
 });
 
 app.get('/championship-registration.html', (req, res) => {
+  res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'championship-registration.html'));
 });
 
