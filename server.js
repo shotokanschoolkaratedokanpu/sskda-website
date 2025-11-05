@@ -23,10 +23,34 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Serve static files
-app.use(express.static(__dirname));
-app.use('/image-assets', express.static(path.join(__dirname, 'image-assets')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+// Serve static files from root and subdirectories
+// In Vercel serverless functions, we need to be explicit about static asset serving
+app.use(express.static(__dirname, { 
+  dotfiles: 'ignore',
+  etag: true,
+  extensions: ['html', 'htm'],
+  index: ['index.html', 'index.htm'],
+  maxAge: '1d',
+  redirect: true,
+  setHeaders: function(res, path, stat) {
+    res.set('x-timestamp', Date.now());
+  }
+}));
+
+// Explicitly serve image assets
+const imageAssetsPath = path.join(__dirname, 'image-assets');
+const uploadsPath = path.join(__dirname, 'uploads');
+
+app.use('/image-assets', express.static(imageAssetsPath, {
+  maxAge: '1d',
+  etag: true
+}));
+
+app.use('/uploads', express.static(uploadsPath, {
+  maxAge: '1d',
+  etag: true
+}));
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
