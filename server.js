@@ -25,6 +25,8 @@ const upload = multer({ storage });
 
 // Serve static files
 app.use(express.static(__dirname));
+app.use('/image-assets', express.static(path.join(__dirname, 'image-assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 

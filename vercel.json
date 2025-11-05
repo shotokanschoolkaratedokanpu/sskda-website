@@ -7,7 +7,8 @@
       "config": {
         "includeFiles": [
           "*.html",
-          "image-assets/**"
+          "image-assets/**",
+          "uploads/**"
         ]
       }
     }
