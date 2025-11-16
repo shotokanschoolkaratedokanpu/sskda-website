@@ -3,23 +3,26 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": [
-          "image-assets/**",
-          "uploads/**",
-          "*.html",
-          "*.json",
-          "node_modules/**",
-          "public/**",
-          "*.png",
-          "*.jpg",
-          "*.jpeg"
-        ]
-      }
+      "use": "@vercel/node"
     }
   ],
   "routes": [
+    {
+      "src": "/image-assets/(.*)",
+      "dest": "/image-assets/$1"
+    },
+    {
+      "src": "/uploads/(.*)",
+      "dest": "/uploads/$1"
+    },
+    {
+      "src": "/public/(.*)",
+      "dest": "/public/$1"
+    },
+    {
+      "src": "/(.*\\.(png|jpg|jpeg|gif|ico|svg|css|js|html))",
+      "dest": "/$1"
+    },
     {
       "src": "/(.*)",
       "dest": "/server.js"
