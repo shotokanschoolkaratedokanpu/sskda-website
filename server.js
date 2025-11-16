@@ -5,6 +5,28 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+// ⭐ CRITICAL: Static file middleware MUST come before everything else
+app.use('/public', express.static(path.join(__dirname, 'public'), {
+  maxAge: '1d',
+  etag: true
+}));
+
+app.use('/image-assets', express.static(path.join(__dirname, 'image-assets'), {
+  maxAge: '1d',
+  etag: true
+}));
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  maxAge: '1d',
+  etag: true
+}));
+
+// Also serve from root for backwards compatibility
+app.use(express.static(path.join(__dirname, 'public'), {
+  maxAge: '1d',
+  etag: true
+}));
+
 // Set up storage for uploaded images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -21,22 +43,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// Now add other middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// CRITICAL: Bypass for static files - Serve them directly
-app.use((req, res, next) => {
-  // If the request is for a static file, serve it directly
-  if (req.path.match(/\.(png|jpg|jpeg|gif|ico|svg|css|js|html)$/)) {
-    const filePath = path.join(__dirname, req.path);
-    if (fs.existsSync(filePath)) {
-      return res.sendFile(filePath);
-    }
-  }
-  next();
-});
-
-// Explicit routes for HTML pages
+// Then add your routes
 app.get('/', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -72,7 +83,6 @@ app.get('/championship-registration.html', (req, res) => {
   res.sendFile(path.join(__dirname, 'championship-registration.html'));
 });
 
-// Handle achievement submission
 app.post('/submit-achievement', upload.single('achievementImage'), (req, res) => {
   try {
     const { athlete, competition, category, achievement, year, type, associationId } = req.body;
@@ -207,14 +217,6 @@ app.get('/api/championship-registrations', (req, res) => {
     res.status(500).send('Error fetching registrations');
   }
 });
-
-// CRITICAL: Serve static files from public directory
-app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/image-assets', express.static(path.join(__dirname, 'image-assets')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Also serve from root for backwards compatibility
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
