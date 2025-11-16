@@ -3,25 +3,25 @@
   "builds": [
     {
       "src": "server.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "public/**",
+          "image-assets/**",
+          "uploads/**",
+          "*.json",
+          "*.html"
+        ]
+      }
     }
   ],
   "routes": [
     {
-      "src": "/image-assets/(.*)",
-      "dest": "/image-assets/$1"
+      "handle": "filesystem"
     },
     {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1"
-    },
-    {
-      "src": "/public/(.*)",
-      "dest": "/public/$1"
-    },
-    {
-      "src": "/(.*\\.(png|jpg|jpeg|gif|ico|svg|css|js|html))",
-      "dest": "/$1"
+      "src": "/api/(.*)",
+      "dest": "/server.js"
     },
     {
       "src": "/(.*)",
