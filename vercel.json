@@ -16,32 +16,7 @@
   ],
   "routes": [
     {
-      "src": "/public/(.*)",
-      "dest": "/public/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
-    },
-    {
-      "src": "/image-assets/(.*)",
-      "dest": "/image-assets/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
-    },
-    {
-      "src": "/uploads/(.*)",
-      "dest": "/uploads/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
-    },
-    {
-      "src": "/(.*\\.(png|jpg|jpeg|gif|ico|svg|css|js|html))",
-      "dest": "/$1",
-      "headers": {
-        "Access-Control-Allow-Origin": "*"
-      }
+      "handle": "filesystem"
     },
     {
       "src": "/api/(.*)",
