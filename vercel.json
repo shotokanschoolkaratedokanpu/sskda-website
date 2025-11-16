@@ -9,7 +9,11 @@
           "public/**",
           "image-assets/**",
           "uploads/**",
-          "*.json"
+          "*.png",
+          "*.jpg",
+          "*.jpeg",
+          "*.json",
+          "*.html"
         ]
       }
     }
