@@ -9,15 +9,36 @@
           "public/**",
           "image-assets/**",
           "uploads/**",
-          "*.json",
-          "*.html"
+          "*.json"
         ]
       }
     }
   ],
   "routes": [
     {
-      "handle": "filesystem"
+      "src": "/public/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    },
+    {
+      "src": "/image-assets/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    },
+    {
+      "src": "/uploads/(.*)",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
+    },
+    {
+      "src": "/(.*\\.(png|jpg|jpeg|gif|ico|svg|css|js|html))",
+      "dest": "/$1",
+      "headers": {
+        "Access-Control-Allow-Origin": "*"
+      }
     },
     {
       "src": "/api/(.*)",

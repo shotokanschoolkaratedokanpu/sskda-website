@@ -5,28 +5,6 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// ⭐ CRITICAL: Static file middleware MUST come before everything else
-app.use('/public', express.static(path.join(__dirname, 'public'), {
-  maxAge: '1d',
-  etag: true
-}));
-
-app.use('/image-assets', express.static(path.join(__dirname, 'image-assets'), {
-  maxAge: '1d',
-  etag: true
-}));
-
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
-  maxAge: '1d',
-  etag: true
-}));
-
-// Also serve from root for backwards compatibility
-app.use(express.static(path.join(__dirname, 'public'), {
-  maxAge: '1d',
-  etag: true
-}));
-
 // Set up storage for uploaded images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -43,11 +21,11 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// Now add other middleware
+// ONLY use middleware needed for API routes
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Then add your routes
+// Explicit routes for HTML pages
 app.get('/', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'));
