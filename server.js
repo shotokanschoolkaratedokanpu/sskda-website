@@ -40,6 +40,7 @@ app.use(express.static(__dirname, {
 // Explicitly serve image assets
 const imageAssetsPath = path.join(__dirname, 'image-assets');
 const uploadsPath = path.join(__dirname, 'uploads');
+const publicPath = path.join(__dirname, 'public');
 
 app.use('/image-assets', express.static(imageAssetsPath, {
   maxAge: '1d',
@@ -47,6 +48,18 @@ app.use('/image-assets', express.static(imageAssetsPath, {
 }));
 
 app.use('/uploads', express.static(uploadsPath, {
+  maxAge: '1d',
+  etag: true
+}));
+
+// Explicitly serve public directory for images
+app.use('/public', express.static(publicPath, {
+  maxAge: '1d',
+  etag: true
+}));
+
+// Also serve images from root path for backwards compatibility
+app.use(express.static(publicPath, {
   maxAge: '1d',
   etag: true
 }));

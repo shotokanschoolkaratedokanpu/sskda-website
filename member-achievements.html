@@ -191,7 +191,21 @@
         .bronze {
             background-color: #CD7F32;
         }
+                
+        /* Achievement Image Styling */
+        .achievement-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #eee;
+        }
         
+        .achievements-table td img {
+            max-width: 50px;
+            max-height: 50px;
+            border-radius: 4px;
+        }
         /* Filter Controls */
         .filter-controls {
             margin-bottom: 20px;
@@ -342,6 +356,7 @@
                 <table class="achievements-table">
                     <thead>
                         <tr>
+                            <th>Image</th>
                             <th>Athlete</th>
                             <th>Competition</th>
                             <th>Category</th>
@@ -447,7 +462,7 @@
                 if (data.length === 0) {
                     const row = document.createElement('tr');
                     const cell = document.createElement('td');
-                    cell.colSpan = 5;
+                    cell.colSpan = 6;
                     cell.textContent = 'No achievements found matching your criteria';
                     cell.style.textAlign = 'center';
                     cell.style.padding = '30px';
@@ -463,6 +478,20 @@
                     if (item.medal) {
                         row.classList.add(`${item.medal}-row`);
                     }
+                    
+                    // Image
+                    const imageCell = document.createElement('td');
+                    if (item.image) {
+                        const img = document.createElement('img');
+                        img.src = item.image;
+                        img.alt = item.athlete;
+                        img.className = 'achievement-img';
+                        img.onerror = function() {
+                            this.style.display = 'none';
+                        };
+                        imageCell.appendChild(img);
+                    }
+                    row.appendChild(imageCell);
                     
                     // Athlete
                     const athleteCell = document.createElement('td');
