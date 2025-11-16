@@ -24,7 +24,19 @@ const upload = multer({ storage });
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Explicit routes for HTML pages (Vercel serverless compatibility)
+// CRITICAL: Bypass for static files - Serve them directly
+app.use((req, res, next) => {
+  // If the request is for a static file, serve it directly
+  if (req.path.match(/\.(png|jpg|jpeg|gif|ico|svg|css|js|html)$/)) {
+    const filePath = path.join(__dirname, req.path);
+    if (fs.existsSync(filePath)) {
+      return res.sendFile(filePath);
+    }
+  }
+  next();
+});
+
+// Explicit routes for HTML pages
 app.get('/', (req, res) => {
   res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
   res.sendFile(path.join(__dirname, 'index.html'));
@@ -65,7 +77,6 @@ app.post('/submit-achievement', upload.single('achievementImage'), (req, res) =>
   try {
     const { athlete, competition, category, achievement, year, type, associationId } = req.body;
     
-    // Validate association ID
     if (!associationId || !associationId.startsWith('KA') || associationId.length !== 5) {
       res.status(400).send('Invalid Association ID');
       return;
@@ -87,25 +98,17 @@ app.post('/submit-achievement', upload.single('achievementImage'), (req, res) =>
       image
     };
     
-    // Read existing achievements
     const achievementsPath = path.join(__dirname, 'achievements.json');
     const data = fs.readFileSync(achievementsPath, 'utf8');
     const achievements = data ? JSON.parse(data) : [];
-    
-    // Add new achievement
     achievements.push(newAchievement);
-    
-    // Write updated data back
     fs.writeFileSync(achievementsPath, JSON.stringify(achievements, null, 2));
-    
-    // Redirect to member achievements
     res.redirect(`/member-achievements.html?associationId=${associationId}`);
   } catch (error) {
     res.status(500).send('Error submitting achievement');
   }
 });
 
-// API endpoint for achievements with filtering
 app.get('/api/achievements', (req, res) => {
   const achievementsPath = path.join(__dirname, 'achievements.json');
   const data = fs.readFileSync(achievementsPath, 'utf8');
@@ -113,23 +116,18 @@ app.get('/api/achievements', (req, res) => {
   
   const { type, year, search, associationId } = req.query;
   
-  // Filter by association ID if provided
   if (associationId) {
     achievements = achievements.filter(item => item.associationId === associationId);
   }
   
-// Apply type filter
   if (type && type !== 'all') {
     achievements = achievements.filter(item => item.type === type);
   }
   
-  // Apply year filter
   if (year && year !== 'all') {
     achievements = achievements.filter(item => item.year === year);
   }
   
-  
-  // Apply search filter
   if (search) {
     const term = search.toLowerCase();
     achievements = achievements.filter(item =>
@@ -142,7 +140,6 @@ app.get('/api/achievements', (req, res) => {
   res.json(achievements);
 });
 
-// API endpoint for championship registration
 app.post('/api/championship-registration', (req, res) => {
   try {
     const registrationData = {
@@ -151,7 +148,6 @@ app.post('/api/championship-registration', (req, res) => {
       registrationId: 'CHAMP' + Date.now()
     };
     
-    // Validate required fields
     const requiredFields = ['firstName', 'lastName', 'dob', 'gender', 'email', 'phone', 'associationId', 'belt', 'category', 'ageGroup', 'emergencyName', 'emergencyPhone'];
     for (const field of requiredFields) {
       if (!registrationData[field]) {
@@ -160,13 +156,11 @@ app.post('/api/championship-registration', (req, res) => {
       }
     }
     
-    // Validate association ID
     if (!registrationData.associationId.match(/^KA[0-9]{3}$/)) {
       res.status(400).send('Invalid Association ID format. Must be KA followed by 3 digits (e.g., KA001)');
       return;
     }
     
-    // Read existing registrations or create new file
     const registrationsPath = path.join(__dirname, 'championship-registrations.json');
     let registrations = [];
     
@@ -175,10 +169,7 @@ app.post('/api/championship-registration', (req, res) => {
       registrations = data ? JSON.parse(data) : [];
     }
     
-    // Add new registration
     registrations.push(registrationData);
-    
-    // Write updated data back
     fs.writeFileSync(registrationsPath, JSON.stringify(registrations, null, 2));
     
     res.status(200).json({
@@ -192,7 +183,6 @@ app.post('/api/championship-registration', (req, res) => {
   }
 });
 
-// API endpoint to get championship registrations
 app.get('/api/championship-registrations', (req, res) => {
   try {
     const registrationsPath = path.join(__dirname, 'championship-registrations.json');
@@ -207,7 +197,6 @@ app.get('/api/championship-registrations', (req, res) => {
     
     const { associationId } = req.query;
     
-    // Filter by association ID if provided
     if (associationId) {
       registrations = registrations.filter(item => item.associationId === associationId);
     }
@@ -218,6 +207,14 @@ app.get('/api/championship-registrations', (req, res) => {
     res.status(500).send('Error fetching registrations');
   }
 });
+
+// CRITICAL: Serve static files from public directory
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/image-assets', express.static(path.join(__dirname, 'image-assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Also serve from root for backwards compatibility
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
