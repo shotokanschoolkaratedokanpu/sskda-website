@@ -5,6 +5,12 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
+// Minimal static file serving for local development
+// On Vercel, this is bypassed entirely
+app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use('/image-assets', express.static(path.join(__dirname, 'image-assets')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Set up storage for uploaded images
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -21,7 +27,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-// ONLY use middleware needed for API routes
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
