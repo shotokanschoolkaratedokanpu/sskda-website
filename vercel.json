@@ -30,5 +30,9 @@
       "src": "/(.*)",
       "dest": "/server.js"
     }
-  ]
+  ],
+  "github": {
+    "enabled": false
+  },
+  "public": true
 }

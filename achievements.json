@@ -9,7 +9,7 @@
     "type": "kata",
     "medal": "gold",
     "associationId": "KA001",
-    "image": "/public/kai.jpg"
+    "image": "/image_assets/kai.jpg"
   },
   {
     "id": 2,
@@ -21,7 +21,7 @@
     "type": "kumite",
     "medal": "silver",
     "associationId": "KA001",
-    "image": "/public/maya.jpg"
+    "image": "/image_assets/maya.jpg"
   },
   {
     "id": 3,
@@ -33,7 +33,7 @@
     "type": "team",
     "medal": "bronze",
     "associationId": "KA001",
-    "image": "/public/team.jpg"
+    "image": "/image_assets/team.jpg"
   },
   {
     "id": 4,
