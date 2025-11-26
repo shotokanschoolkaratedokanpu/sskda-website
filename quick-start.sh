@@ -1,0 +1,27 @@
+#!/bin/bash
+
+echo "🚀 SSKDA Website - Quick Start"
+echo "================================"
+echo ""
+echo "Starting PHP server at http://localhost:8000"
+echo ""
+echo "⚠️  IMPORTANT: Database setup still needed:"
+echo ""
+echo "1. Open terminal and run:"
+echo "   $ mysql -u root -p"
+echo ""
+echo "2. In MySQL prompt, run:"
+echo "   CREATE DATABASE sskda_website;"
+echo "   CREATE USER 'sskda_user'@'localhost' IDENTIFIED BY 'sskda_local_pass';"
+echo "   GRANT ALL PRIVILEGES ON sskda_website.* TO 'sskda_user'@'localhost';"
+echo "   FLUSH PRIVILEGES;"
+echo "   USE sskda_website;"
+echo "   EXIT;"
+echo ""
+echo "3. Then import data:"
+echo "   $ mysql -u sskda_user -p'sskda_local_pass' sskda_website < database/import.sql"
+echo ""
+echo "Starting server now..."
+echo ""
+
+php -S localhost:8000
