@@ -1,0 +1,13 @@
+RewriteEngine On
+RewriteBase /
+
+# 1. If the request is for index.php, let it run
+RewriteRule ^index\.php$ - [L]
+
+# 2. If the requested file DOES NOT exist...
+RewriteCond %{REQUEST_FILENAME} !-f
+# ...and the requested folder DOES NOT exist...
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# 3. ...then send the request to index.php
+RewriteRule . /index.php [L]
